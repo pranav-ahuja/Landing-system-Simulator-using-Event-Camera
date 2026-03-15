@@ -66,6 +66,23 @@ Optional direct run:
 PYTHONPATH=src python -m simulator.main --capture
 ```
 
+## 5) Phase A platform stabilization checks
+
+Run the Phase A health checks before event-pipeline work:
+
+```bash
+./scripts/run_phase_a_checks.sh --airsim-ip 127.0.0.1 --vehicle Drone1 --sitl-endpoint 127.0.0.1:14550
+```
+
+What it validates:
+
+- SITL endpoint format and host resolution
+- AirSim RPC connectivity (retries up to 5 attempts by default)
+- vehicle availability in AirSim (`getMultirotorState`)
+- API control/arm-disarm capability sanity cycle
+
+Phase A target is a reproducible PASS across 5/5 startup attempts.
+
 ## Mission behavior
 
 1. Connects to AirSim API.
