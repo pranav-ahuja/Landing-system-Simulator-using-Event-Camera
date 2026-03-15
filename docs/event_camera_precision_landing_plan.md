@@ -450,6 +450,12 @@ The milestones above are now grouped into execution phases with clear scope and 
 - reproducible connection across 5/5 startup attempts
 - consistent vehicle naming and API control
 
+**How to test at end of implementation:**
+- Run platform health check 5 times from clean start.
+- Verify AirSim RPC ping, vehicle discovery, API arm/disarm cycle.
+- Verify SITL endpoint reachability and heartbeat logging.
+- Pass condition: all checks pass in 5/5 attempts.
+
 ## 14.2 Phase B — Event pipeline baseline
 
 **Objective:** Build event-data path from AirSim imagery to event stream.
@@ -466,6 +472,12 @@ The milestones above are now grouped into execution phases with clear scope and 
 **Exit criteria:**
 - continuous event generation during flight
 - synchronized frame/event logs with no timestamp regressions
+
+**How to test at end of implementation:**
+- Run a fixed 2-minute flight path.
+- Record frame timestamps and event timestamps.
+- Validate monotonic timestamps and non-empty event stream throughout run.
+- Pass condition: zero timestamp regressions, zero dropped pipeline crashes, valid event logs saved.
 
 ## 14.3 Phase C — Scene and pad modeling
 
@@ -484,6 +496,12 @@ The milestones above are now grouped into execution phases with clear scope and 
 - at least 3 pad types validated in simulation
 - repeatable scenario reproduction from seed/config
 
+**How to test at end of implementation:**
+- Execute seeded scenarios for square, hex, and H pads.
+- Re-run the same seeds and compare generated layout and emitter parameters.
+- Validate weather/background preset loading for each scenario profile.
+- Pass condition: scenario replay is deterministic for identical seed/config.
+
 ## 14.4 Phase D — SITL control integration
 
 **Objective:** Connect perception output to FCU via MAVLink.
@@ -500,6 +518,12 @@ The milestones above are now grouped into execution phases with clear scope and 
 **Exit criteria:**
 - stable `LANDING_TARGET` stream at target rate
 - verified coordinate-frame consistency tests passing
+
+**How to test at end of implementation:**
+- Replay estimator outputs into MAVLink bridge for 3 minutes.
+- Check SITL logs for `LANDING_TARGET` receive rate, jitter, and field validity.
+- Run transform unit tests for camera/body/NED conversions.
+- Pass condition: configured rate maintained and all transform tests pass.
 
 ## 14.5 Phase E — Closed-loop landing trials
 
@@ -518,6 +542,12 @@ The milestones above are now grouped into execution phases with clear scope and 
 - successful autonomous landings in baseline night scenario
 - no unsafe control oscillation in terminal descent
 
+**How to test at end of implementation:**
+- Run at least 20 autonomous landing trials in baseline night scenario.
+- Measure landing error and touchdown success/failure per trial.
+- Inspect descent profiles for oscillation near touchdown.
+- Pass condition: stable descent behavior and success rate meets agreed threshold.
+
 ## 14.6 Phase F — Robustness and reporting
 
 **Objective:** Stress test and quantify readiness.
@@ -534,6 +564,12 @@ The milestones above are now grouped into execution phases with clear scope and 
 **Exit criteria:**
 - KPI thresholds met for selected operating envelope
 - documented failure modes + mitigation plan
+
+**How to test at end of implementation:**
+- Run full batch matrix across offsets/weather/frequency patterns.
+- Compute KPI distributions ($P50$, $P90$, $P99$) and compare to thresholds.
+- Generate final report with failure cases and mitigation recommendations.
+- Pass condition: thresholds met in target envelope, with signed-off report.
 
 ## 14.7 Exit criteria for hardware transition
 
