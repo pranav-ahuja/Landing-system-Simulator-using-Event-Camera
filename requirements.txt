@@ -1,0 +1,5 @@
+numpy>=1.24
+opencv-python>=4.8
+msgpack-rpc-python>=0.4.1
+airsim==1.8.1
+backports.ssl-match-hostname>=3.7.0.1
